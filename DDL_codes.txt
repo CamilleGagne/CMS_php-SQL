@@ -1,0 +1,779 @@
+CREATE TABLE Department (
+   Did int (1),
+   Dept_name varchar(40),
+   Tam int(3) 
+ );
+
+CREATE TABLE Contract (
+   Id int(6),
+   Company_id varchar(6),
+   Comp_name varchar(255),
+   Type varchar(255),
+   Start_date date,  
+   Service_type varchar(50),
+   ACV$ varchar(12),
+   Initial_amount$ double,
+   Active_Expired varchar(255),
+   Mid int(4),
+   Satisfaction int(2),
+   Department int(1)
+ );
+   
+CREATE TABLE Categories (
+   Categories varchar (20),
+   FD int (50),
+   SD int (50),
+   TD int (50),
+   Final int (50)
+);
+
+CREATE TABLE Information (
+  First_name varchar(50),
+  Last_name varchar(50),
+  Address varchar(50),
+  City varchar(50),
+  Province varchar(2),
+  Phone_number varchar(15),
+  Email varchar(50),
+  Role varchar (25),
+  Id mediumint(9) AUTO_INCREMENT
+);
+
+CREATE TABLE Insurance_plan(
+   Plan_name varchar (20),
+   Coverage varchar (20),
+   Id varchar(1)
+);
+
+
+CREATE TABLE Login (
+   Username int (5),
+   Password varchar(8),
+   Permission varchar(1)
+   Active int(1)
+ );
+
+CREATE TABLE Manager (
+  Insurance_plan varchar(50),
+  Business_line varchar(20),
+  Mid int(4)
+);
+
+CREATE TABLE Permission (
+   Role varchar(10),
+   Permission varchar(10)
+);
+
+CREATE TABLE Productivity (
+   Contract_id int(5),
+   Eid int(5),
+   First_deliverable date,
+   Second_deliverable date,
+   Third_deliverable date,
+   Final_deliverable date
+);
+
+CREATE TABLE Sales_associates (
+   Eid int(5),
+   Insurance_plan varchar(50)
+);
+
+CREATE TABLE Satisfaction (
+   Satisfaction int(2),
+   Insurance_plan varchar(50)
+);
+
+CREATE TABLE Tam (
+   Tid int(3),
+   Insurance_plan varchar (50)
+);
+
+
+
+
+
+ALTER TABLE Department ADD PRIMARY KEY(Did);
+ALTER TABLE Contract ADD PRIMARY KEY(Id);
+ALTER TABLE Categories ADD PRIMARY KEY(Categories);
+ALTER TABLE Information ADD PRIMARY KEY(Id);
+ALTER TABLE Insurance_plan ADD PRIMARY KEY(Id);
+ALTER TABLE Login ADD PRIMARY KEY(Username);
+ALTER TABLE Manager ADD PRIMARY KEY(Mid);
+ALTER TABLE Permission ADD PRIMARY KEY(Permission);
+ALTER TABLE Sales_associates ADD PRIMARY KEY(Eid);
+ALTER TABLE Satisfaction ADD PRIMARY KEY(satisfaction);
+ALTER TABLE  Tam ADD PRIMARY KEY(Tid);
+
+ALTER TABLE Department ADD FOREIGN KEY (Tam) REFERENCES Tam (Tid);
+ALTER TABLE Contract ADD FOREIGN KEY (Type) REFERENCES Categories (Categories);
+ALTER TABLE Contract ADD FOREIGN KEY (Department) REFERENCES Department (Did);
+ALTER TABLE Contract ADD FOREIGN KEY (Satisfaction) REFERENCES Satisfaction(Satisfaction);
+ALTER TABLE Contract ADD FOREIGN KEY (Department) REFERENCES Department(Did);
+ALTER TABLE Contract ADD FOREIGN KEY (Mid) REFERENCES Manager (Mid);
+ALTER TABLE Login ADD FOREIGN KEY (Permission) REFERENCES Permission(Permission);
+ALTER TABLE Manager ADD FOREIGN KEY (Insurance_plan) references Insurance_plan(Id);
+ALTER TABLE Sales_Associates ADD FOREIGN KEY (Insurance_plan) references Insurance_plan(Id);
+ALTER TABLE  Tam ADD FOREIGN KEY (Insurance_plan) references Insurance_plan(Id);
+
+
+
+
+
+Insert into Categories (Categories, FD, SD, TD, Final) values
+(‘Diamond’ , ‘6 business days’, ‘11 business days’, null, ‘18 day from contract start’),
+(‘Gold’, ‘8 business days’, ‘14 business days’, null, ‘20 day from contract start’),
+(‘Premium’, ‘3 business days’, ‘5 business days’, null, ‘10 day from contract start’)
+(‘Silver’, ‘5 business days’, ‘15 business days’, ‘20 business days’,’28 day from contract start’);
+
+Insert into Contract (Id, Company_id, Comp_name, Type, Start_date, Service_type, ACV$, Initial_amount$, Active_expired, Mid, Satisfaction, Department) values
+ (284, 35,'Proin Corporation','Silver','2017-01-16','On-Premises', 38840,7103,'Expired',34, 4, 2), 
+ (285, 28,'Justo Nec PC', 'Silver', '2017-01-09',  'On-Premises',     25256,7080,'Expired',37,5,6), 
+ (286, 26,'Ipsum Primis In LLP', 'Diamond',  '2017-01-20',  'Cloud Services',  24573,    5137  ,'Expired',37,1, 4), 
+ (287, 8, 'Fringilla Euismod Enim Inc',     'Diamond',  '2017-01-08',  'On-Premises',     38275,    1687  ,'Expired',37,4,4), 
+ (288, 9, 'Dolor LLC','Silver','2017-02-02',  'Cloud Services',  14171,    2611  ,'Expired',  15,    4,  2), 
+ (289, 28,'Justo Nec PC','Diamond','2017-02-19',  'On-Premises',     42689,    4900  ,'Expired',  38,    7,  6), 
+ (290, 36,'Id Institute','Gold','2017-03-09',  'On-Premises',     26511,    3721  ,'Expired',  15,    8,  1), 
+ (291, 28,'Justo Nec PC','Gold', '2017-03-12',  'On-Premises',     25095,    5021  ,'Expired',  34,    4,  5), 
+ (292, 30,'Accumsan Corp','Gold','2017-03-24',  'On-Premises',     16574,    6400  ,'Expired',  37,   10,  3), 
+ (293, 36,'Id Institute','Silver', '2017-03-03',  'Cloud Services',  30654,    5412  ,'Expired',  38,    3,  5), 
+ (294, 30,'Accumsan Corp','Diamond', '2017-05-03',  'On-Premises',     29040,     907  ,'Expired',  38,    5,  1), 
+ (295, 29,'Laoreet Industries','Silver','2017-04-01',  'Cloud Services',  36794,    7552  ,'Expired',  38,   10,  1), 
+ (296, 29,'Laoreet Industries', 'Diamond', '2017-04-15',  'Cloud Services',  14246,    7870  ,'Expired',  15,    3,  6), 
+ (297, 36,'Id Institute', 'Premium', '2017-04-15',  'On-Premises',     32229,    2340  ,'Expired',  41,    1,  1), 
+ (298, 20,'A Felis Associates', 'Diamond',  '2017-04-16',  'On-Premises',     17574,    1742  ,'Expired',  41,    8,  1), 
+ (299, 22,'Urna Vivamus Associates', 'Silver',   '2017-05-09',  'Cloud Services',  24946,     407  ,'Expired',  15,    9,  3), 
+ (300, 2, 'Et Magna Consulting', 'Premium',  '2017-05-13',  'On-Premises',     21347,    4928  ,'Expired',  15,   10,  3), 
+ (301, 32,'Nibh Phasellus Institute',        'Gold',     '2017-05-20',  'On-Premises',     12630,    2695  ,'Expired',  38,    4,  3), 
+ (302, 9, 'Dolor LLC','Gold','2017-05-21',  'Cloud Services',  14879,    5190  ,'Expired',  15,    4,  5), 
+ (303, 32,'Nibh Phasellus Institute',  'Premium',  '2017-05-30',  'Cloud Services',  19253,    6936  ,'Expired',  37,    8,  5), 
+ (304, 32,'Nibh Phasellus Institute', 'Premium',  '2017-05-30',  'Cloud Services',  19253,    6936  ,'Expired',  37,    8,  5), 
+ (305, 32,'Nibh Phasellus Institute', 'Premium',  '2017-05-30',  'Cloud Services',  19253,    6936  ,'Expired',  37,    8,  5), 
+ (306, 9, 'Dolor LLC', 'Silver', '2017-05-30',  'On-Premises',     34362,    3849  ,'Expired',  15,    2,  6), 
+ (307, 22,'Urna Vivamus Associates','Diamond',  '2017-07-03',  'On-Premises',     25268,    6752  ,'Expired',  41,    7,  3), 
+ (308, 27,'Sit Amet Luctus Ltd', 'Premium',  '2017-07-28',  'On-Premises',     48829,    1780  ,'Expired',  37,    3,  6), 
+ (309, 39,'Vel Company', 'Silver', '2017-07-30',  'On-Premises',     46194,    2873  ,'Expired',  41,    6,  5), 
+ (310, 29,'Laoreet Industries', 'Silver',   '2017-08-04',  'Cloud Services',  21723,     918  ,'Expired',  38,    2,  3), 
+ (311, 33,'Lectus Ante Inc', 'Gold', '2017-08-25',  'Cloud Services',  47613,    7710  ,'Expired',  41,    2,  6), 
+ (312, 35,'Proin Corporation', 'Premium', '2017-08-25',  'Cloud Services',  33897,    3246  ,'Expired',  41,    9,  2), 
+ (313, 4, 'Faucibus Id Libero Associates', 'Premium',  '2017-09-16',  'On-Premises',   11336,    1648  ,'Expired',  38,    8,  1), 
+ (314, 5, 'Ullamcorper Viverra LLP', 'Silver',   '2017-10-02',  'Cloud Services',  13112,    3520  ,'Expired',  34,    9,  4), 
+ (315, 36,'Id Institute', 'Silver',  '2017-10-15',  'Cloud Services',  37683,    2739  ,'Expired',  34,    3,  3), 
+ (316, 9, 'Dolor LLC', 'Diamond',  '2017-10-08',  'On-Premises',     22666,    2388  ,'Expired',  34,    4,  3), 
+ (317, 2, 'Et Magna Consulting', 'Premium',  '2017-10-29',  'Cloud Services',  33656,    2234  ,'Expired',  37,    3,  1), 
+ (318, 35,'Proin Corporation', 'Premium',  '2017-10-30',  'On-Premises',     43368,    3341  ,'Expired',  15,    2,  2), 
+ (319, 8, 'Fringilla Euismod Enim Inc', 'Premium',  '2017-11-08',  'Cloud Services',  36758,    1698  ,'Expired',  41,    2,  5), 
+ (320, 20,'A Felis Associates', 'Diamond',  '2017-11-22',  'On-Premises',     49532,    1(297  ,'Expired',  41,    2,  1), 
+ (321, 2, 'Et Magna Consulting','Premium',  '2017-12-10',  'On-Premises',     41780,    7393  ,'Expired',  37,    4,  5), 
+ (322, 39,'Vel Company', 'Silver','2017-12-04',  'Cloud Services',  38293,     684  ,'Expired',  38,    9,  1), 
+ (323, 9, 'Dolor LLC', 'Gold', '2017-12-05',  'Cloud Services',  39860,    3672  ,'Expired',  41,    7,  1), 
+ (324, 2, 'Et Magna Consulting','Silver',   '2017-12-16',  'On-Premises',     45233,    2647  ,'Expired',  38,    8,  4), 
+ (325, 9, 'Dolor LLC','Gold','2017-12-19',  'Cloud Services',  12303,    2049  ,'Expired',  37,    8,  1), 
+ (326, 32,'Nibh Phasellus Institute', 'Premium',  '2017-05-30',  'Cloud Services',  19253,    6936  ,'Expired',  37,    8,  5), 
+ (327, 32,'Nibh Phasellus Institute','Premium',  '2017-05-30',  'Cloud Services',  19253,   6936  ,'Expired',  37,    8,  5), 
+ (328, 29,'Laoreet Industries','Gold', '2017-06-08',  'Cloud Services',  31329,    5500  ,'Expired',  34,    7,  2), 
+ (329, 35,'Proin Corporation', 'Silver','2017-07-22',  'On-Premises',     21390,    4663  ,'Expired',  41,    4,  5), 
+ (330, 26,'Ipsum Primis In LLP','Premium','2017-06-10',  'Cloud Services',  22542,    (3046  ,'Expired',  41,   10,  3), 
+ (331, 29,'Laoreet Industries','Gold','2017-06-01',  'On-Premises',     31114,    1646  ,'Expired',  38,    5,  1), 
+ (332, 29,'Laoreet Industries', 'Gold', '2017-06-08',  'Cloud Services',  31329,    5500  ,'Expired',  15,    7,  2), 
+ (333, 33,'Lectus Ante Inc', 'Diamond',  '2018-08-09',  'Cloud Services',  28599,     836  ,'Active',   38,         , null,  6), 
+ (335, 27,'Sit Amet Luctus Ltd','Diamond',  '2018-08-03',  'On-Premises',     38625,     677  ,'Active',   38 , null,  3), 
+ (336, 4, 'Faucibus Id Libero Associates',   'Gold',     '2018-06-08',  'On-Premises',     13377,     891  ,'Active',   37 , null,  5), 
+ (337, 26,'Ipsum Primis In LLP','Diamond',  '2018-04-08',  'Cloud Services',  25331,     760  ,'Active',   34 , null,  4), 
+ (338, 26,'Ipsum Primis In LLP','Silver',   '2018-07-27',  'Cloud Services',  31604,     888  ,'Active',   41 , null,  3), 
+ (339, 20,'A Felis Associates','Premium',  '2018-07-14',  'Cloud Services',  78085,     951  ,'Active',   34 , null,  6), 
+ (340, 39,'Vel Company', 'Silver','2018-07-24',  'On-Premises',     19702,     517  ,'Active',   15 , null,  3), 
+ (341, 5, 'Ullamcorper Viverra LLP','Gold',     '2018-07-12',  'Cloud Services',  15799,     739  ,'Active',   37 , null,  4), 
+ (342, 22,'Urna Vivamus Associates','Diamond',  '2018-07-10',  'Cloud Services',  23269,     718  ,'Active',   34 , null,  3), 
+ (343, 30,'Accumsan Corp', 'Diamond', '2018-08-08',  'Cloud Services',  49370,     942  ,'Active',   15 , null,  5), 
+ (344, 30,'Accumsan Corp', 'Diamond', '2018-05-08',  'Cloud Services',  75389,     664  ,'Active',   38 , null,  5), 
+ (345, 5, 'Ullamcorper Viverra LLP', 'Premium',  '2018-07-12',  'Cloud Services',  59941,     567  ,'Active',   41 , null,  3), 
+ (346, 27,'Sit Amet Luctus Ltd', 'Gold','2018-08-09',  'Cloud Services',  67226,     752  ,'Active',   38 , null,  4), 
+ (347, 27,'Sit Amet Luctus Ltd','Premium','2018-06-18',  'Cloud Services',  33749,     838  ,'Active',   34 , null,  6), 
+ (348, 28,'Justo Nec PC',  'Silver','2018-07-12',  'Cloud Services',  29632,     841  ,'Active',   37 , null,  2), 
+ (349, 33,'Lectus Ante Inc', 'Diamond', '2018-02-07',  'Cloud Services',  21350,     807  ,'Active',   38 , null,  2), 
+ (350, 30,'Accumsan Corp', 'Diamond', '2018-01-07',  'On-Premises',     26803,     6(30  ,'Active',   37 , null,  6), 
+ (351, 22,'Urna Vivamus Associates', 'Diamond',  '2018-07-19',  'Cloud Services',  48597,     525  ,'Active',   38 , null,  1), 
+ (352, 8, 'Fringilla Euismod Enim Inc','Premium',  '2018-07-18',  'Cloud Services',  55635,     866  ,'Active',   37 , null,  5), 
+ (353, 9, 'Dolor LLC', 'Diamond',  '2018-08-09',  'Cloud Services',  22505,     737  ,'Active',   38 , null,  6), 
+ (354, 30,'Accumsan Corp', 'Silver','2018-04-08',  'Cloud Services',  68804,     682  ,'Active',   41 , null,  1), 
+ (355, 30,'Accumsan Corp', 'Diamond','2018-01-07',  'Cloud Services',  71457,     776  ,'Active',   37 , null,  4), 
+ (356, 32,'Nibh Phasellus Institute', 'Premium',  '2018-07-11',  'On-Premises',     46015,     993  ,'Active',   41 , null,  3), 
+ (357, 28,'Justo Nec PC','Premium', '2018-01-08',  'Cloud Services',  58309,     6(30  ,'Active',   15 , null,  6), 
+ (358, 9, 'Dolor LLC', 'Premium', '2018-07-30',  'On-Premises',     67589,     571  ,'Active',   37 , null,  2), 
+ (359, 27,'Sit Amet Luctus Ltd','Premium',  '2018-08-01',  'Cloud Services',  51518,     993  ,'Active',   34 , null,  4), 
+ (360, 22,'Urna Vivamus Associates','Diamond',  '2018-05-07',  'Cloud Services',  51787,     699  ,'Active',   38 , null,  5), 
+ (361, 27,'Sit Amet Luctus Ltd','Diamond',  '2018-07-29',  'Cloud Services',  36274,     793  ,'Active',   38 , null,  4)
+              (362, 8, 'Fringilla Euismod Enim Inc','Premium',  '2018-06-07',  'On-Premises',     53530,     722  ,'Active',   15 , null,  1);
+
+Insert into Department (Did, Dept_name, Tam) values
+(1,'Development',10), 
+(2,'QA',11), 
+(3,'UI',12), 
+(4,'Design',17), 
+(5,'Business Intelligence',18) 
+(6,'Networking',19);
+
+Insert into Information (First_name, Last_name, Address, City, Province, Phone_number, Email, Role, Id) values                       
+('Florence', 'Lebron' , '040 Old Shore Crossing'  , 'Montreal' , 'QC' , '5143612268' , 'flebron@intel.com' , 'Sales Associates' , 1 ) ,
+( 'Stacy' , 'Liffe' , '84410 Lindbergh Alley'  , 'Miramichi' , 'NB' , '5066118838' , 'sliffe7@tumblr.com' , 'Client' , 2 ) ,
+( 'Marie' , 'Tremblay' , '10458 avenue 2'  , 'Montreal' , 'QC' , '5148795634' , 'marie@hotmail.com' , 'Client' , 3 ) ,
+( 'Holmes' , 'Hector' , '93366 Iowa Way'  , 'Laval' , 'QC' , '4503658791' , 'hhector4@studiopress.com' , 'Client' , 4 ) ,
+( 'Romain' , 'Grocutt' , '87 Basil Parkway'  , 'Calgary' , 'AB' , '4036534882' , 'rgrocutth@constantcontact.com' , 'Client' , 5 ) ,
+( 'Kristine' , 'Laurence' , '4 Warner Park'  , 'Montreal' , 'QC' , '5141332034' , 'krilaurence2@taobao.com' , 'Sales Associates' , 6 ) ,
+( 'Christine' , 'Shawshank' Byrne' , '4 Emmet Place'  , 'Montreal' , 'QC' , '5145191680' , 'shawc3@msn.com' , 'Sales Associates' , 7 ) ,
+( 'Rivy' , 'Duffett' , '16161 Prairieview Avenue'  , 'Quebec City' , 'QC' , '4188118580' , 'rduffett1@woothemes.com' , 'Client' , 8 ) ,
+( 'Channa' , 'Birchenough' , '4 Carioca Hill'  , 'Quebec City' , 'QC' , '4189452790' , 'cbirchenoughj@youku.com' , 'Client' , 9 ) ,
+( 'Hall' , 'Wilkins' , 'P.O. Box 364, 2906 Erat Ave'  , 'Montreal' , 'QC' , '6223308786' , 'lobortis.Class.aptent@condimentumeget.ca' , 'Technical Account' , 10 ) ,
+( 'Keelie' , 'Patel' , 'P.O. Box 306, 2888 Mauris Road'  , 'Montreal' , 'QC' , '5196528264' , 'mauris@magna.ca' , 'Technical Account' , 11 ) ,
+( 'Beatrice' , 'Allison' , 'Ap #763-1871 Purus. Avenue'  , 'Montreal' , 'QC' , '7297765265' , 'dolor.sit.amet@Phasellus.co.uk' , 'Technical Account' , 12 ) ,
+( 'Josh' , 'Fetcher' , '85525 School Circle'  , 'Montreal' , 'QC' , '5148507442' , 'fetcher4@squidoo.com' , 'Sales Associates' , 13 ) ,
+( 'Kaleb' , 'Crawdad' , '1 Everett Pass'  , 'Montreal' , 'QC' , '5148569213' , 'kaleb5@list-manage.com' , 'Sales Associates' , 14 ) ,
+( 'Camille' , 'Gagne' , '08 Grover Court'  , 'Montreal' , 'QC' , '5146075765' , 'camille6@newsvine.com' , 'Manager' , 15 ) ,
+( 'Mary' , 'Louise' , '2 Pankratz Place'  , 'Montreal' , 'QC' , '5148659795' , 'marylouise7@aol.com' , 'Sales Associates' , 16 ) ,
+( 'Jerry' , 'Milburn' , '1 Crownhardt Point'  , 'Montreal' , 'QC' , '5143392093' , 'jmilburn0@wikimedia.org' , 'Technical Account' , 17 ) ,
+( 'Leonard' , 'Ferrell' , '588-8447 Pretium Street'  , 'Montreal' , 'QC' , '1293149131' , 'Duis.volutpat@euaugueporttitor.edu' ,    'Technical Account' , 18 ) ,
+( 'Mannix' , 'Clemons' , '413-1023 In Rd.'  , 'Montreal' , 'QC' , '4967415053' , 'nec.enim@facilisiSed.net' , 'Technical Account' , 19 ) ,
+( 'Sander' , 'Cowe' , '1 Eagan Crossing'  , 'Moncton' , 'NB' , '5067162813' , 'scoweb@freewebs.com' , 'Client' , 20 ) ,
+( 'Billy' , 'Tompson' , '1 Merchant Point'  , 'Montreal' , 'QC' , '5141222392' , 'biltom8@webeden.co.uk' , 'Sales Associates' , 21 ) ,
+( 'Isacco' , 'Murtagh' , '0949 Tennessee Alley'  , 'Laval' , 'QC' , '4501689921' , 'imurtagh9@nydailynews.com' , 'Client' , 22 ) ,
+( 'Sean' , 'Paul' , '15 5th Trail'  , 'Montreal' , 'QC' , '5148038771' , 'spaul@ted.com' , 'Sales Associates' , 23 ) ,
+( 'Berling' , 'Chan' , '7765 Green Ridge Circle'  , 'Montreal' , 'QC' , '5148516403' , 'chan@ucla.edu' , 'Sales Associates' , 24 ) ,
+( 'Sheryl' , 'Forbes' , '4765 Anniversary Road'  , 'Montreal' , 'QC' , '5145467188' , 'sforbes@weather.com' , 'Sales Associates' , 25 ) ,
+( 'Debby' , 'Dietzler' , '14731 Helena Parkway'  , 'Montreal' , 'QC' , '5142833723' , 'ddietzlerc@vistaprint.com' , 'Client' , 26 ) ,
+( 'Kendre' , 'Klousner' , '535 Ohio Parkway'  , 'Edmonton' , 'AB' , '7806740727' , 'kklousner2@tumblr.com' , 'Client' , 27 ) ,
+( 'Gearalt' , 'Hukin' , '670 Kingsford Pass'  , 'Montreal' , 'QC' , '5146103526' , 'ghukine@angelfire.com' , 'Client' , 28 ) ,
+( 'Charles' , 'Selvester' , '32 Laurel Plaza'  , 'Calgary' , 'AB' , '4038132633' , 'cselvester3@about.me' , 'Client' , 29 ) ,
+( 'Chadd' , 'Brainsby' , '25 Superior Trail'  , 'Montreal' , 'QC' , '5149617366' , 'cbrainsby0@home.pl' , 'Client' , 30 ) ,
+( 'Candice' , 'Vivians' , '951 Rusk Lane'  , 'Montreal' , 'QC' , '5144824896' , 'cviviansj@reddit.com' , 'Sales Associates' , 31 ) ,
+( 'Forster' , 'Gravie' , '3 Grover Plaza'  , 'Winnipeg' , 'MB' , '2044678364' , 'fgravie8@cbsnews.com' , 'Client' , 32 ) ,
+( 'Ketty' , 'Hallaways' , '207 Thompson Circle'  , 'Montreal' , 'QC' , '5142359492' , 'khallawaysd@nps.gov' , 'Client' , 33 ) ,
+( 'Holly' , 'Ryan' , '3 Miller Road'  , 'Montreal' , 'QC' , '5149156101' , 'hryan@behance.net' , 'Manager' , 34 ) ,
+( 'Arman' , 'Richarson' , '11 Hanover Center'  , 'Vancouver' , 'BC' , '6043097745' , 'aricharsonf@yolasite.com' , 'Client' , 35 ) ,
+( 'Coleman' , 'Quene' , '2053 Vera Lane'  , 'Vancouver' , 'BC' , '6044776416' , 'cqueneg@about.me' , 'Client' , 36 ) ,
+( 'Connor' , 'Neuendorff' , '27077 Portage Hill'  , 'Montreal' , 'QC' , '5148149861' , 'conneuen@cyberchimps.com' , 'Manager' , 37 ) ,
+( 'David' , 'Van' , '5566 Mendota Avenue'  , 'Montreal' , 'QC' , '5144047168' , 'davan@dyndns.org' , 'Manager' , 38 ) ,
+( 'Lolita' , 'Curnnok' , '33826 Graceland Plaza'  , 'Bathurst' , 'NB' , '5065562457' , 'lcurnnok6@salon.com' , 'Client' , 39 ) ,
+( 'Jason' , 'Peniwise' , '31097 Garrison Road'  , 'Montreal' , 'QC' , '5147101330' , 'peniwise@utexas.edu' , 'Sales Associates' , 40 ) ,
+( 'Akshat' , 'Bisht' , '917 Red Cloud Center'  , 'Montreal' , 'QC' , '5144295194' , 'Abisht@redcross.org' , 'Manager' , 41 ) ,
+( 'Pistin' , 'Lafleur' , '7464 Magdeline Drive'  , 'Montreal' , 'QC' , '5143611284' , 'Pistin@csmonitor.com' , 'Sales Associates' , 42 ) ,
+( 'Diane-marie' , 'Treend' , '9308 Fremont Parkway'  , 'Calgary' , 'AB' , '4034958964' , 'dtreendi@spotify.com' , 'Client' , 43 ) ,
+( 'James', 'Bond' , '44 America'  , 'Montreal' , 'QC' , '5147895426' , 'james@bond.com' , 'Sales Associates' , 44 ) ,
+( 'Zelda', 'Bell' , 'Ap #527-2018 Erat. Av.'  , 'Montreal' , 'QC' , '5147361269' , 'fringilla.cursus@nibh.com' , 'Sales Associates' , 45 ) ,
+( 'Blake', 'Morrison' , '6484 Curabitur Ave'  , 'Montreal' , 'QC' , '5146352447' , 'orci.in@vitaeodio.edu' , 'Sales Associates' , 46 ) ,
+( 'Amethyst' , 'Norris' , 'P.O. Box 615, 2582 Morbi St.'  , 'Montreal' , 'QC' , '5145811303' , 'a.feugiat@a.com' , 'Sales Associates' , 47 ) ,
+( 'Alexa' , 'Stanton' , 'Ap #534-1901 Sed, Av.'  , 'Montreal' , 'QC' , '5149456341' , 'tempor.est@seddolorFusce.co.uk' , 'Sales Associates' , 48 ) ,
+( 'Rae', 'Castro' , 'Ap #984-8004 Nec, Ave'  , 'Montreal' , 'QC' , '5142642972' , 'adipiscing@urnaconvalliserat.com' , 'Sales Associates' , 49 ) ,
+( 'Tad', 'Rodriquez' , 'Ap #133-5583 Proin Ave'  , 'Montreal' , 'QC' , '5145545356' , 'mauris@cursusnonegestas.edu' , 'Sales Associates' , 50 ) ,
+( 'Alexis' , 'Tillman' , '6505 Cras Rd.'  , 'Montreal' , 'QC' , '5149755984' , 'Cras.pellentesque.Sed@cursus.ca' , 'Sales Associates' ,) 
+ ( 'Dana', 'Cairo I. Powell' , '2053 Malesuada St.'  , 'Montreal' , 'QC' , '5142333145' , 'velit.eu.sem@liberoProin.org' , 'Sales  Associates' , 52 ) ,
+ ( 'Katelyn' , 'Ivory T. Fernandez' , '985-6631 Elit, St.'  , 'Montreal' , 'QC' , '5143128573' , 'magna@aliquamarcu.com' , 'Sales 
+  Associats' , 53 ) ,
+ ( 'Madonna' , 'Fuller Q. Coleman' , 'Ap #140-680 Sem Ave'  , 'Montreal' , 'QC' , '5147100693' , 'magna@pedeblandit.edu' , 'Sales  Associates' , 54 ) ,
+ ( 'Heather' , 'Priscilla U. Levy' , 'P.O. Box 202, 2365 Vel, Rd.'  , 'Montreal' , 'QC' , '5146104652' , 'faucibus.orci.luctus@acturpis.ca' , 'Sales Associates' , 55 ) ,
+ ( 'Bryar', 'Sierra Q. Bentley' , 'P.O. Box 686, 3378 Quisque St.'  , 'Montreal' , 'QC' , '5149290989' , 
+   'ligula.Anean.euismod@Classaptenttaciti.com' , 'Sales Associates' , 56 ),
+ ( 'Chloe', 'Jin D. Thornton' , 'Ap #284-2059 Aliquet, St.'  , 'Montreal' , 'QC' , '5143201761' , 'fringilla.cursus@lorem.edu' , 'Sales 
+    Associates' , 57 ) ,
+ ( 'Hillary', 'Forrest H. Burch' , '1716 Mauris Rd.'  , 'Montreal' , 'QC' , '5148885153' , 'lacus.Ut.nec@Proinnon.co.uk' , 'Sales 
+   Associats' , 58 )
+( 'Felix', 'Angela C. Erickson' , '797-9597 Dolor Rd.'  , 'Montreal' , 'QC' , '5141472039' , 'elit.sed@Suspendisse.net' , 'Sales Associates' , 59 );
+
+Insert into Insurance_plan (Plan_name, Coverage, Id) values
+    ('Premium Employee Plan','90%','A'),  
+    ('Silver Employee Plan','80%','B') 
+    ('Normal Employee Plan','70%','C');  
+
+Insert into Login (Username, Password, Permission, Active) values 
+        (1 ,'Hello',1, 1),  
+        (2 ,'Hello','C', 1),   
+        (3 ,'Hello','C', 1),   
+        (4 ,'Hello','C', 1),   
+        (5 ,'Hello', 'C', 1),   
+        (6 ,'Hello', 1, 1),   
+        (7 ,'Hello', 1, 1),   
+        (8 ,'Hello', 'C', 1),   
+        (9 ,'Hello', 'C', 1),   
+       (10 ,'Hello', 3, 1),   
+       (11 ,'Hello', 3, 1),   
+       (12 ,'Hello',3, 1),   
+       (13 ,'Hello',1, 1),    
+       (14 ,'Hello',1, 1),  
+       (15 ,'Hello',2, 1),   
+       (16 ,'Hello',1, 1),   
+       (17 ,'Hello',3, 1),   
+       (18 ,'Hello',3, 1),   
+       (19 ,'Hello',3, 1),  
+       (20 ,'Hello','C', 1),  
+       (21 ,'Hello',1, 1),   
+       (22 ,'Hello','C', 1),   
+       (23 ,'Hello', 1, 1),   
+       (24 ,'Hello',1, 1),   
+       (25 ,'Hello', 1, 1),   
+       (26 ,'Hello', 'C', 1),   
+       (27 ,'Hello', 'C', 1),   
+       (28 ,'Hello', 'C', 1),   
+       (29 ,'Hello','C', 1),   
+       (30 ,'Hello', 'C', 1),   
+       (31 ,'Hello', 1, 1),   
+       (32 ,'Hello','C', 1),   
+       (33 ,'Hello','C', 1),   
+       (34 ,'Hello',2, 1),   
+       (35 ,'Hello','C', 1),   
+       (36 ,'Hello','C', 1),   
+       (37 ,'Hello', 2, 1),   
+       (38 ,'Hello',2, 1),   
+       (39 ,'Hello','C', 1),   
+       (40 ,'Hello', 1, 1),   
+       (41 ,'Hello',2, 1),   
+       (42 ,'Hello', 1, 1),   
+       (43 ,'Hello','C', 1),   
+       (44 ,'Hello', 1, 1),   
+       (45 ,'Hello', 1, 1),   
+       (46 ,'Hello',1, 1),   
+       (47 ,'Hello', 1, 1),   
+       (48 ,'Hello',1, 1),   
+       (49 ,'Hello',1, 1),   
+       (50 ,'Hello',1, 1),   
+       (51 ,'Hello', 1, 1),   
+       (52 ,'Hello', 1, 1),   
+       (53 ,'Hello', 1, 1),   
+       (54 ,'Hello', 1, 1),   
+       (55 ,'Hello', 1, 1),   
+       (56 ,'Hello', 1, 1),   
+       (57 ,'Hello', 1, 1),   
+       (58 ,'Hello', 1, 1),   
+       (59 ,'Hello', 1, 1),   
+      (999 ,'Hello', 4, 1)  
+     (1000 ,'Hello', 5, 1);   
+
+Insert into Manager(Insurance_plan, Business_line, Mid) values
+(‘A’, ‘Cloud services’, 15);
+(‘A’, ‘Business Development, 34);
+(‘B’, ‘Research’, 37);
+(‘A’, ‘Social Media’, 38);
+(‘A’, ‘Technical Support’, 41);
+
+Insert into Permission (Role, Permission) values				
+('Sales Associates','1'),
+('Manager','2'),
+('TAM','3')
+('Client'	,'C');
+
+insert into Preference (Category, Id) values ('Gold' ,1);
+insert into Preference (Category, Id) values ('Premium' ,6);
+insert into Preference (Category, Id) values ('Diamond' ,7);
+insert into Preference (Category, Id) values ('Gold' ,13);
+insert into Preference (Category, Id) values ('Gold' ,14);
+insert into Preference (Category, Id) values ('Diamond' ,16);
+insert into Preference (Category, Id) values ('Diamond' ,21);
+insert into Preference (Category, Id) values ('Premium' ,23);
+insert into Preference (Category, Id) values ('Silver' ,24);
+insert into Preference (Category, Id) values ('Diamond' ,25);
+insert into Preference (Category, Id) values ('Premium' ,31);
+insert into Preference (Category, Id) values ('Silver' ,40);
+insert into Preference (Category, Id) values ('Silver' ,42);
+insert into Preference (Category, Id) values ('Premium',44);
+insert into Preference (Category, Id) values ('Diamond',45);
+insert into Preference (Category, Id) values ('Gold',46);
+insert into Preference (Category, Id) values ('Gold',47);
+insert into Preference (Category, Id) values ('Gold',48);
+insert into Preference (Category, Id) values ('Silver',49);
+insert into Preference (Category, Id) values ('Premium',50);
+insert into Preference (Category, Id) values ('Premium',51);
+insert into Preference (Category, Id) values ('Diamond',52);
+insert into Preference (Category, Id) values ('Silver',53);
+insert into Preference (Category, Id) values ('Silver',54);
+insert into Preference (Category, Id) values ('Gold',55);
+insert into Preference (Category, Id) values ('Premium',56);
+insert into Preference (Category, Id) values ('Silver',57);
+insert into Preference (Category, Id) values ('Gold',58)
+insert into Preference (Category, Id) values ('Diamond',59);
+
+update Productivity set Third_deliverable = Second_deliverable where Third_deliverable is null;
+
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (284,40,'1/15/2017','1/23/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (285,48,'1/9/2017','1/17/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (286,25,'1/20/2017','1/30/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (287,1,'1/8/2017','1/16/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (288,21,'2/2/2017','2/10/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (289,46,'2/19/2017','2/27/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (290,51,'3/9/2017','3/17/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (291,25,'3/12/2017','3/20/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (292,51,'3/24/2017','4/3/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (293,13,'3/3/2017','3/13/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (294,57,'5/3/2017','5/15/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (295,45,'4/1/2017','4/12/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (296,40,'4/15/2017','4/26/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (297,44,'4/15/2017','4/26/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (298,50,'4/16/2017','4/26/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (299,31,'5/9/2017','5/19/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (300,51,'5/13/2017','5/24/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (301,40,'5/20/2017','5/31/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (302,57,'5/21/2017','5/31/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (303,24,'5/30/2017','6/9/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (304,31,'5/30/2017','6/9/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (305,50,'5/30/2017','6/2/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (306,54,'7/19/2017','7/26/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (307,55,'7/3/2017','7/3/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (308,56,'7/28/2017','7/28/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (309,23,'7/30/2017','7/30/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (310,1,'8/4/2017','8/4/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (311,13,'8/25/2017','8/25/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (312,57,'8/25/2017','8/25/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (313,21,'9/16/2017','9/16/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (314,57,'10/2/2017','10/2/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (315,40,'10/15/2017','10/15/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (316,13,'10/8/2017','10/8/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (317,45,'10/29/2017','10/29/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (318,55,'10/30/2017','10/30/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (319,57,'11/8/2017','11/8/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (320,24,'11/22/2017','11/29/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (321,7,'12/10/2017','12/10/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (322,58,'12/4/2017','12/4/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (323,57,'12/5/2017','12/5/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (324,49,'12/16/2017','12/16/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (325,21,'12/19/2017','12/19/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (326,45,'5/30/2017','5/30/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (327,14,'5/30/2017','5/30/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (328,25,'6/8/2017','6/8/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (329,6,'7/22/2017','7/22/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (330,40,'6/10/2017','6/10/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (331,45,'6/1/2017','6/1/2017');
+insert into Productivity(Contract_id, Eid, Service_date,First_deliverable) Values (332,45,'6/8/2017','6/8/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (284,26,'2/8/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (285,27,'2/2/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (286,28,'2/15/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (287,36,'2/1/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (288,22,'2/28/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (289,9,'3/15/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (290,33,'4/4/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (291,27,'4/5/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (292,28,'4/19/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (293,27,'3/29/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (294,36,'6/5/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (295,28,'5/3/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (296,20,'5/17/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (297,29,'5/17/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (298,20,'5/17/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (299,39,'6/9/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (300,32,'6/14/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (301,9,'6/21/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (302,22,'6/21/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (303,4,'6/30/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (304,35,'6/30/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (305,32,'6/12/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (306,36,'8/1/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (307,2,'7/14/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (308,35,'8/10/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (309,33,'8/10/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (310,9,'8/17/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (311,39,'9/7/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (312,29,'9/7/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (313,35,'9/28/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (314,26,'10/13/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (315,35,'10/26/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (316,20,'10/19/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (317,20,'11/9/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (318,36,'11/10/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (319,28,'11/21/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (320,33,'12/21/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (321,4,'1/8/2018');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (322,26,'1/2/2018');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (323,5,'1/3/2018');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (324,30,'1/15/2018');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (325,26,'1/17/2018');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (326,29,'6/28/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (327,22,'6/28/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (328,2,'7/7/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (329,28,'8/21/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (330,8,'7/10/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (331,8,'6/30/2017');
+insert into Productivity (Contract_id, Eid, Second_deliverable) values (332,43,'7/7/2017');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (320,35,'1/1/2018');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (321,32,'1/17/2018');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (322,33,'1/11/2018');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (323,35,'1/12/2018');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (324,36,'1/24/2018');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (325,9,'1/26/2018');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (326,9,'7/7/2017');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (327,32,'7/7/2017');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (328,27,'7/18/2017');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (329,20,'8/30/2017');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (330,20,'7/19/2017');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (331,29,'7/11/2017');
+insert into Productivity (Contract_id, Eid, Third_deliverable) values (332,4,'7/18/2017');
+update Productivity set Third_deliverable = '1/18/2018'where Third_deliverable = '1/1/2018';
+update Productivity set Third_deliverable = '2/5/2018'where Third_deliverable = '1/17/2018';
+update Productivity set Third_deliverable = '1/30/2018'where Third_deliverable = '1/11/2018';
+update Productivity set Third_deliverable = '1/31/2018'where Third_deliverable = '1/12/2018';
+update Productivity set Third_deliverable = '2/12/2018'where Third_deliverable = '1/24/2018';
+update Productivity set Third_deliverable = '2/14/2018'where Third_deliverable = '1/26/2018';
+update Productivity set Third_deliverable = '7/26/2017'where Third_deliverable = '7/7/2017';
+update Productivity set Third_deliverable = '7/26/2017'where Third_deliverable = '7/7/2017';
+update Productivity set Third_deliverable = '8/4/2017'where Third_deliverable = '7/18/2017';
+update Productivity set Third_deliverable = '9/18/2017'where Third_deliverable = '8/30/2017';
+update Productivity set Third_deliverable = '8/7/2017'where Third_deliverable = '7/19/2017';
+update Productivity set Third_deliverable = '7/28/2017'where Third_deliverable = '7/11/2017';
+update Productivity set Third_deliverable = '8/4/2017'where Third_deliverable = '7/18/2017';
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (284,26,'2/8/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (285,9,'2/2/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (286,35,'2/15/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (287,39,'2/1/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (288,4,'2/28/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (289,9,'3/15/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (290,33,'4/4/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (291,36,'4/5/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (292,26,'4/19/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (293,39,'3/29/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (294,36,'5/31/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (295,35,'4/28/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (296,36,'5/12/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (297,36,'5/12/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (298,2,'5/12/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (299,32,'6/6/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (300,22,'6/9/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (301,33,'6/16/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (302,27,'6/16/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (303,27,'6/27/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (304,29,'6/27/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (305,9,'6/13/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (306,9,'8/2/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (307,9,'7/17/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (308,36,'8/11/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (309,30,'8/11/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (310,43,'8/18/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (311,35,'9/8/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (312,8,'9/8/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (313,39,'9/29/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (314,4,'10/16/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (315,20,'10/27/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (316,20,'10/20/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (317,39,'11/10/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (318,27,'11/13/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (319,29,'11/22/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (320,22,'1/1/2018');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (321,32,'1/17/2018');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (322,8,'1/11/2018');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (323,2,'1/12/2018');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (324,9,'1/24/2018');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (325,30,'1/26/2018');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (326,36,'7/7/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (327,8,'7/7/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (328,5,'7/18/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (329,32,'8/30/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (330,5,'7/19/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (331,29,'7/11/2017');
+insert into Productivity (Contract_id, Eid, Final_deliverable) values (332,28,'7/18/2017');
+
+alter table Productivity add Time time;
+
+update Productivity set Time = '00:35:55' where First_deliverable = '1/23/2017';
+update Productivity set Time = '00:49:18' where First_deliverable = '1/17/2017';
+update Productivity set Time = '00:08:17' where First_deliverable = '1/30/2017';
+update Productivity set Time = '00:26:09' where First_deliverable = '1/16/2017';
+update Productivity set Time = '00:44:09' where First_deliverable = '2/10/2017';
+update Productivity set Time = '00:48:33' where First_deliverable = '2/27/2017';
+update Productivity set Time = '00:53:47' where First_deliverable = '3/17/2017';
+update Productivity set Time = '00:02:01' where First_deliverable = '3/20/2017';
+update Productivity set Time = '00:28:15' where First_deliverable = '4/3/2017';
+update Productivity set Time = '00:40:19' where First_deliverable = '3/13/2017';
+update Productivity set Time = '00:26:34' where First_deliverable = '5/15/2017';
+update Productivity set Time = '00:58:28' where First_deliverable = '4/12/2017';
+update Productivity set Time = '00:34:22' where First_deliverable = '4/26/2017';
+update Productivity set Time = '00:46:29' where First_deliverable = '4/26/2017';
+update Productivity set Time = '00:43:10' where First_deliverable = '4/26/2017';
+update Productivity set Time = '00:21:53' where First_deliverable = '5/19/2017';
+update Productivity set Time = '00:58:26' where First_deliverable = '5/24/2017';
+update Productivity set Time = '00:49:21' where First_deliverable = '5/31/2017';
+update Productivity set Time = '00:11:25' where First_deliverable = '5/31/2017';
+update Productivity set Time = '00:37:14' where First_deliverable = '6/9/2017';
+update Productivity set Time = '00:33:55' where First_deliverable = '6/9/2017';
+update Productivity set Time = '00:37:26' where First_deliverable = '6/2/2017';
+update Productivity set Time = '00:16:57' where First_deliverable = '7/26/2017';
+update Productivity set Time = '00:53:17' where First_deliverable = '7/3/2017';
+update Productivity set Time = '00:45:05' where First_deliverable = '7/28/2017';
+update Productivity set Time = '00:10:01' where First_deliverable = '7/30/2017';
+update Productivity set Time = '00:10:00' where First_deliverable = '8/4/2017';
+update Productivity set Time = '00:40:00' where First_deliverable = '8/25/2017';
+update Productivity set Time = '00:04:53' where First_deliverable = '8/25/2017';
+update Productivity set Time = '00:09:41' where First_deliverable = '9/16/2017';
+update Productivity set Time = '00:48:07' where First_deliverable = '10/2/2017';
+update Productivity set Time = '00:05:19' where First_deliverable = '10/15/2017';
+update Productivity set Time = '00:37:34' where First_deliverable = '10/8/2017';
+update Productivity set Time = '00:36:46' where First_deliverable = '10/29/2017';
+update Productivity set Time = '00:01:36' where First_deliverable = '10/30/2017';
+update Productivity set Time = '00:18:38' where First_deliverable = '11/8/2017';
+update Productivity set Time = '00:46:46' where First_deliverable = '11/29/2017';
+update Productivity set Time = '00:29:28' where First_deliverable = '12/10/2017';
+update Productivity set Time = '00:53:58' where First_deliverable = '12/4/2017';
+update Productivity set Time = '00:47:58' where First_deliverable = '12/5/2017';
+update Productivity set Time = '00:30:41' where First_deliverable = '12/16/2017';
+update Productivity set Time = '00:51:25' where First_deliverable = '12/19/2017';
+update Productivity set Time = '00:53:22' where First_deliverable = '5/30/2017';
+update Productivity set Time = '00:44:12' where First_deliverable = '5/30/2017';
+update Productivity set Time = '00:45:00' where First_deliverable = '6/8/2017';
+update Productivity set Time = '00:17:19' where First_deliverable = '7/22/2017';
+update Productivity set Time = '00:30:04' where First_deliverable = '6/10/2017';
+update Productivity set Time = '00:31:29' where First_deliverable = '6/1/2017';
+update Productivity set Time = '00:26:06' where First_deliverable = '6/8/2017';
+update Productivity set Time = '00:23:03 'where Second_deliverable = '2/8/2017';
+update Productivity set Time = '00:58:37 'where Second_deliverable = '2/2/2017';
+update Productivity set Time = '00:22:59 'where Second_deliverable = '2/15/2017';
+update Productivity set Time = '00:01:17 'where Second_deliverable = '2/1/2017';
+update Productivity set Time = '00:38:58 'where Second_deliverable = '2/28/2017';
+update Productivity set Time = '00:19:28 'where Second_deliverable = '3/15/2017';
+update Productivity set Time = '00:45:04 'where Second_deliverable = '4/4/2017';
+update Productivity set Time = '00:12:26 'where Second_deliverable = '4/5/2017';
+update Productivity set Time = '00:31:51 'where Second_deliverable = '4/19/2017';
+update Productivity set Time = '00:19:16 'where Second_deliverable = '3/29/2017';
+update Productivity set Time = '00:16:13 'where Second_deliverable = '6/5/2017';
+update Productivity set Time = '00:17:16 'where Second_deliverable = '5/3/2017';
+update Productivity set Time = '00:51:34 'where Second_deliverable = '5/17/2017';
+update Productivity set Time = '00:41:40 'where Second_deliverable = '5/17/2017';
+update Productivity set Time = '00:44:00 'where Second_deliverable = '5/17/2017';
+update Productivity set Time = '00:28:59 'where Second_deliverable = '6/9/2017';
+update Productivity set Time = '00:22:22 'where Second_deliverable = '6/14/2017';
+update Productivity set Time = '00:26:57 'where Second_deliverable = '6/21/2017';
+update Productivity set Time = '00:16:26 'where Second_deliverable = '6/21/2017';
+update Productivity set Time = '00:07:13 'where Second_deliverable = '6/30/2017';
+update Productivity set Time = '00:17:12 'where Second_deliverable = '6/30/2017';
+update Productivity set Time = '00:43:48 'where Second_deliverable = '6/12/2017';
+update Productivity set Time = '00:38:49 'where Second_deliverable = '8/1/2017';
+update Productivity set Time = '00:08:51 'where Second_deliverable = '7/14/2017';
+update Productivity set Time = '00:07:25 'where Second_deliverable = '8/10/2017';
+update Productivity set Time = '00:41:18 'where Second_deliverable = '8/10/2017';
+update Productivity set Time = '00:44:45 'where Second_deliverable = '8/17/2017';
+update Productivity set Time = '00:23:13 'where Second_deliverable = '9/7/2017';
+update Productivity set Time = '00:50:51 'where Second_deliverable = '9/7/2017';
+update Productivity set Time = '00:03:19 'where Second_deliverable = '9/28/2017';
+update Productivity set Time = '00:25:05 'where Second_deliverable = '10/13/2017';
+update Productivity set Time = '00:33:54 'where Second_deliverable = '10/26/2017';
+update Productivity set Time = '00:48:17 'where Second_deliverable = '10/19/2017';
+update Productivity set Time = '00:44:37 'where Second_deliverable = '11/9/2017';
+update Productivity set Time = '00:55:13 'where Second_deliverable = '11/10/2017';
+update Productivity set Time = '00:28:46 'where Second_deliverable = '11/21/2017';
+update Productivity set Time = '00:22:10 'where Second_deliverable = '12/21/2017';
+update Productivity set Time = '00:06:07 'where Second_deliverable = '1/8/2018';
+update Productivity set Time = '00:30:57 'where Second_deliverable = '1/2/2018';
+update Productivity set Time = '00:08:50 'where Second_deliverable = '1/3/2018';
+update Productivity set Time = '00:15:26 'where Second_deliverable = '1/15/2018';
+update Productivity set Time = '00:03:52 'where Second_deliverable = '1/17/2018';
+update Productivity set Time = '00:10:14 'where Second_deliverable = '6/28/2017';
+update Productivity set Time = '00:34:08 'where Second_deliverable = '6/28/2017';
+update Productivity set Time = '00:52:02 'where Second_deliverable = '7/7/2017';
+update Productivity set Time = '00:02:54 'where Second_deliverable = '8/21/2017';
+update Productivity set Time = '00:15:19 'where Second_deliverable = '7/10/2017';
+update Productivity set Time = '00:24:49 'where Second_deliverable = '6/30/2017';
+update Productivity set Time = '00:50:08 'where Second_deliverable = '7/7/2017';
+update Productivity set Time = '00:17:55 'where Final_deliverable = '2/8/2017';
+update Productivity set Time = '00:33:04 'where Final_deliverable = '2/2/2017';
+update Productivity set Time = '00:05:22 'where Final_deliverable = '2/15/2017';
+update Productivity set Time = '00:09:19 'where Final_deliverable = '2/1/2017';
+update Productivity set Time = '00:44:58 'where Final_deliverable = '2/28/2017';
+update Productivity set Time = '00:26:18 'where Final_deliverable = '3/15/2017';
+update Productivity set Time = '00:46:42 'where Final_deliverable = '4/4/2017';
+update Productivity set Time = '00:12:29 'where Final_deliverable = '4/5/2017';
+update Productivity set Time = '00:57:23 'where Final_deliverable = '4/19/2017';
+update Productivity set Time = '00:56:05 'where Final_deliverable = '3/29/2017';
+update Productivity set Time = '00:39:48 'where Final_deliverable = '5/31/2017';
+update Productivity set Time = '00:22:48 'where Final_deliverable = '4/28/2017';
+update Productivity set Time = '00:53:11 'where Final_deliverable = '5/12/2017';
+update Productivity set Time = '00:22:21 'where Final_deliverable = '5/12/2017';
+update Productivity set Time = '00:59:58 'where Final_deliverable = '5/12/2017';
+update Productivity set Time = '00:45:21 'where Final_deliverable = '6/6/2017';
+update Productivity set Time = '00:20:44 'where Final_deliverable = '6/9/2017';
+update Productivity set Time = '00:20:43 'where Final_deliverable = '6/16/2017';
+update Productivity set Time = '00:08:22 'where Final_deliverable = '6/16/2017';
+update Productivity set Time = '00:35:04 'where Final_deliverable = '6/27/2017';
+update Productivity set Time = '00:43:51 'where Final_deliverable = '6/27/2017';
+update Productivity set Time = '00:00:52 'where Final_deliverable = '6/13/2017';
+update Productivity set Time = '00:11:50 'where Final_deliverable = '8/2/2017';
+update Productivity set Time = '00:50:24 'where Final_deliverable = '7/17/2017';
+update Productivity set Time = '00:14:56 'where Final_deliverable = '8/11/2017';
+update Productivity set Time = '00:08:49 'where Final_deliverable = '8/11/2017';
+update Productivity set Time = '00:26:43 'where Final_deliverable = '8/18/2017';
+update Productivity set Time = '00:11:28 'where Final_deliverable = '9/8/2017';
+update Productivity set Time = '00:49:42 'where Final_deliverable = '9/8/2017';
+update Productivity set Time = '00:53:01 'where Final_deliverable = '9/29/2017';
+update Productivity set Time = '00:01:37 'where Final_deliverable = '10/16/2017';
+update Productivity set Time = '00:18:12 'where Final_deliverable = '10/27/2017';
+update Productivity set Time = '00:14:54 'where Final_deliverable = '10/20/2017';
+update Productivity set Time = '00:35:37 'where Final_deliverable = '11/10/2017';
+update Productivity set Time = '00:54:31 'where Final_deliverable = '11/13/2017';
+update Productivity set Time = '00:52:02 'where Final_deliverable = '11/22/2017';
+update Productivity set Time = '00:47:29 'where Final_deliverable = '1/1/2018';
+update Productivity set Time = '00:33:15 'where Final_deliverable = '1/17/2018';
+update Productivity set Time = '00:24:26 'where Final_deliverable = '1/11/2018';
+update Productivity set Time = '00:51:47 'where Final_deliverable = '1/12/2018';
+update Productivity set Time = '00:57:38 'where Final_deliverable = '1/24/2018';
+update Productivity set Time = '00:12:16 'where Final_deliverable = '1/26/2018';
+update Productivity set Time = '00:50:56 'where Final_deliverable = '7/7/2017';
+update Productivity set Time = '00:18:07 'where Final_deliverable = '7/7/2017';
+update Productivity set Time = '00:43:49 'where Final_deliverable = '7/18/2017';
+update Productivity set Time = '00:11:01 'where Final_deliverable = '8/30/2017';
+update Productivity set Time = '00:21:14 'where Final_deliverable = '7/19/2017';
+update Productivity set Time = '00:06:17 'where Final_deliverable = '7/11/2017';
+update Productivity set Time = '00:53:10 'where Final_deliverable = '7/18/2017';
+update Productivity set Time = '00:55:58 'where Third_deliverable = '1/18/2018';
+update Productivity set Time = '00:25:46 'where Third_deliverable = '2/5/2018';
+update Productivity set Time = '00:35:01 'where Third_deliverable = '1/30/2018';
+update Productivity set Time = '00:05:14 'where Third_deliverable = '1/31/2018';
+update Productivity set Time = '00:32:09 'where Third_deliverable = '2/12/2018';
+update Productivity set Time = '00:13:13 'where Third_deliverable = '2/14/2018';
+update Productivity set Time = '00:21:51 'where Third_deliverable = '7/26/2017';
+update Productivity set Time = '00:21:52 'where Third_deliverable = '7/26/2017';
+update Productivity set Time = '00:02:00 'where Third_deliverable = '8/4/2017';
+update Productivity set Time = '00:54:24 'where Third_deliverable = '9/18/2017';
+update Productivity set Time = '00:20:50 'where Third_deliverable = '8/7/2017';
+update Productivity set Time = '00:48:53 'where Third_deliverable = '7/28/2017';
+update Productivity set Time = '00:16:42 'where Third_deliverable = '8/4/2017';
+
+Insert into  Sales_associates (Eid, Insurance_plan) values
+(7,'A'),
+(21,'A'),
+(25,'A'),
+(31,'A'),
+(1,'B'),
+(6,'B'),
+(14,'B'),
+(16,'B'),
+(24,'B'),
+(40,'B'),
+(45,'B'),
+(46,'B'),
+(47,'B'),
+(48,'B'),
+(49,'B'),
+(50,'B'),
+(51,'B'),
+(52,'B'),
+(53,'B'),
+(54,'B'),
+(55,'B'),
+(56,'B'),
+(57,'B'),
+(58,'B'),
+(59,'B'),
+(13,'C'),
+(23,'C')
+(42,'C');
+
+Insert into Tam(Tid, Insurance_plan) values	
+(10,'B'),
+(11,'C'),
+(12,'C'),
+(17,'C'),
+(18,'C')
+(19,'C');	
+
+Insert into Satisfaction(Satisfaction, Description) values
+(1, 'Very low'),
+(2, 'very unsatisfied'),
+(3, 'Unsatisfied'),
+(4, 'Somewhat unsatisfied'),
+(5, 'Average'),
+(6, 'Does not apply'),
+(7, 'Somewhat satisfied'),
+(8, 'satisfied'),
+(9, 'Very satisfied')
+(10,'Extremely satisfied');

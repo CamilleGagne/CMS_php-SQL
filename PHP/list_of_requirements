@@ -1,0 +1,80 @@
+Following 
+are the requirements for the CMS
+system: 
+
+1.As a sales associate, I should be able to create an account of a client 
+by entering client details from the browser. (All details as in Warm up project) ----------------------------->done
+
+2.As a sales associate, I should be able to select a “Province” and “City” from pre
+-populated list of Provinces and Cities of Canada.//----------------------------------------------------------->done
+
+3.As a sales associate, I should be able
+to select from the list of managers assigned to the 
+project. //---------------------------------------------------------------------------------------------------->done
+
+4.As an employee, I should be able to select a category of the contracts such as Premium, 
+Gold, Diamond or Silver on the platform which I wish to work on. //--------------------------------------------->done
+
+
+
+7.As a client, I should be able to see all my active/expired contracts. //------------------------------------->done
+
+10.As a client, I should be able to provide my satisfaction score (1 low:10 –highest) in 
+the database. //------------------------------------------------------------------------------------------------>done
+
+11.As a client, I should be able to check satisfaction score of all the contracts managed by 
+the manager leading the contract. //-----------------------------------------------------------------------------> done
+12.As an admin, I should be able to update any details in the contract. //---------------------------------------> done
+13.As an admin, I should be able to remove/alter any contract from the platform. //------------------------------> done
+
+
+5.As a manager, I should be able to alloc
+ate employees to the contracts based on their 
+selection (selected in feature #4).  
+
+6.As a Technical Account Manager (TAM) 
+,I should be able to able allocate managers 
+managing the project. 
+
+8.As a manager, I should be able to retrieve the report of number of hours an employee 
+works on the contract. 
+
+9.As a manager, I should be able to remove employees from the contract. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
